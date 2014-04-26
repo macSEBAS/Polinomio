@@ -1,5 +1,5 @@
 //
-//  main.cpp
+//  polinomio.cpp
 //  Polinomio
 //
 //  Created by Sebastián García on 26/04/14.

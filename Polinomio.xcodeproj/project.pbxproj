@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B7827EFF190B4835003378EB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B7827EFE190B4835003378EB /* main.cpp */; };
+		B7827EFF190B4835003378EB /* polinomio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B7827EFE190B4835003378EB /* polinomio.cpp */; };
 		B7827F01190B4835003378EB /* Polinomio.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7827F00190B4835003378EB /* Polinomio.1 */; };
 		B7827F08190B4875003378EB /* clase-polinomio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B7827F07190B4875003378EB /* clase-polinomio.cpp */; };
 /* End PBXBuildFile section */
@@ -27,7 +27,7 @@
 
 /* Begin PBXFileReference section */
 		B7827EFB190B4835003378EB /* Polinomio */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Polinomio; sourceTree = BUILT_PRODUCTS_DIR; };
-		B7827EFE190B4835003378EB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		B7827EFE190B4835003378EB /* polinomio.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = polinomio.cpp; sourceTree = "<group>"; };
 		B7827F00190B4835003378EB /* Polinomio.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Polinomio.1; sourceTree = "<group>"; };
 		B7827F07190B4875003378EB /* clase-polinomio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "clase-polinomio.cpp"; sourceTree = "<group>"; };
 		B7827F09190B48BD003378EB /* clase-polinomio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "clase-polinomio.h"; sourceTree = "<group>"; };
@@ -64,7 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				B7827F07190B4875003378EB /* clase-polinomio.cpp */,
-				B7827EFE190B4835003378EB /* main.cpp */,
+				B7827EFE190B4835003378EB /* polinomio.cpp */,
 				B7827F09190B48BD003378EB /* clase-polinomio.h */,
 				B7827F00190B4835003378EB /* Polinomio.1 */,
 			);
@@ -122,7 +122,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7827EFF190B4835003378EB /* main.cpp in Sources */,
+				B7827EFF190B4835003378EB /* polinomio.cpp in Sources */,
 				B7827F08190B4875003378EB /* clase-polinomio.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -231,6 +231,7 @@
 				B7827F06190B4835003378EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
