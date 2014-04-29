@@ -3,7 +3,6 @@
 #include "clase-polinomio.h"
 using namespace std;
 
-
 // El orden al declarar los métodos de la clase: Constructures, destructor, set, get, print, y luego los demás
 
 Polinomio::Polinomio() {
@@ -33,11 +32,10 @@ Polinomio::Polinomio(const Polinomio &p) {	// el constructor por copia
 }
 
 Polinomio::~Polinomio() {
-    this->print();
+    cout << "Destructor" << endl;
 	delete [] coef;
 	grado = 0;
 	max_grado = 0;
-    cout << "Destructor" << endl;
 }
 
 // Que el set haga lo siguiente: si no hay memoria se reserva nueva memoria!! Para el viernes.
@@ -65,11 +63,60 @@ void Polinomio::setCoeficiente(int i, float c) {
 	}
 }
 
-int Polinomio::getGrado() const {
-	return grado;
+
+Polinomio& Polinomio::operator=(const Polinomio &p) {
+    cout << "Asignación" << endl;
+    if (&p != this) {
+        delete [] this->coef;
+        this->max_grado = p.max_grado;
+        this->grado = p.grado;
+        this->coef = new float[this->max_grado + 1];
+        for (int i = 0; i <= max_grado; i++)
+            this->coef[i] = p.coef[i];
+    }
+    return *this;
 }
 
-// falta el getMaxGrado()
+Polinomio Polinomio::operator+(const Polinomio &p) {
+    int grado_mayor;
+	
+	if (this->getGrado() <= p.getGrado())
+		grado_mayor = p.getGrado();
+	else
+		grado_mayor = this->getGrado();
+    Polinomio resultado;
+	for (int i = 0; i <= grado_mayor; i++)
+		resultado.setCoeficiente(i, (this->getCoeficiente(i) + p.getCoeficiente(i)));
+    return resultado;
+}
+
+ostream& operator<<(ostream &flujo, const Polinomio &p) {
+    flujo << p.getCoeficiente(p.getGrado());
+    if (p.getGrado() > 0)
+        flujo << "x^" << p.getGrado();
+    for (int i = p.getGrado() - 1; i >= 0; i--) {
+        if (p.getCoeficiente(i) != 0.0) {
+            flujo << " + " << p.getCoeficiente(i);
+            if (i > 0)
+                flujo << "x^" << i;
+        }
+    }
+    flujo << endl;
+    return flujo;
+}
+
+istream& operator>>(istream &flujo, Polinomio &p) {
+    int grado;
+    float valor;
+    
+    do {
+        flujo >> valor >> grado;
+        if (grado >= 0)
+            p.setCoeficiente(grado,valor);
+    }
+    while ( grado >= 0);
+    return flujo;
+}
 
 void Polinomio::print() const {
 	cout << getCoeficiente(getGrado());
@@ -107,14 +154,14 @@ Polinomio Polinomio::sumar_v1 (Polinomio &p) {
 	if (this->getGrado() > p.getGrado()){
 		gradomaximo = this->getGrado();
 		//Cambiamos el tamaño del vector de coeficientes sin cambiar el grado del polinomio
-		p.setCoeficiente(gradomaximo,0);
-		p.setGrado(gradomaximo);
+		//p.setCoeficiente(gradomaximo,0);
+		//p.setGrado(gradomaximo);
 	}
 	else if (this->getGrado() < p.getGrado()){
 		gradomaximo = p.getGrado();
 		//Cambiamos el tamaño del vector de coeficientes sin cambiar el grado del polinomio
-		this->setCoeficiente(gradomaximo,0);
-		this->setGrado(gradomaximo);
+		//this->setCoeficiente(gradomaximo,0);
+		//this->setGrado(gradomaximo);
 	}
     else
         gradomaximo = p.getGrado();
@@ -144,65 +191,18 @@ void Polinomio::sumar_v2(const Polinomio &p1, const Polinomio &p2) {
 	}
 }
 
-Polinomio Polinomio::operator+(const Polinomio &p) {
-    int grado_menor, grado_mayor;
-	
-	if (this->getGrado() <= p.getGrado()) {
-		grado_menor = this->getGrado();
-		grado_mayor = p.getGrado();
-	}
-	else {
-		grado_menor = p.getGrado();
-		grado_mayor = this->getGrado();
-	}
-    Polinomio resultado;
-	for (int i = 0; i <= grado_menor; i++)
-		resultado.setCoeficiente(i, (this->getCoeficiente(i) + p.getCoeficiente(i)));
-	if (grado_menor == this->getGrado())
-		for (int i = grado_menor + 1; i <= grado_mayor; i++)
-			resultado.setCoeficiente(i, p.getCoeficiente(i));
-    else {
-        for (int i = grado_menor + 1; i <= grado_mayor; i++)
-			resultado.setCoeficiente(i, this->getCoeficiente(i));
-	}
-    return resultado;
-}
-
-Polinomio &Polinomio::operator=(const Polinomio &p) {
-    cout << "Asignación" << endl;
-    if (&p != this) {
-        delete [] this->coef;
-        this->max_grado = p.max_grado;
-        this->grado = p.grado;
-        this->coef = new float[this->max_grado + 1];
-        for (int i = 0; i <= max_grado; i++)
-            this->coef[i] = p.coef[i];
-    }
-    return *this;
-}
-
 // Sobrecarga de la operación + como función externa
 Polinomio operator+(const Polinomio &p1, const Polinomio &p2) {
-    int grado_menor, grado_mayor;
+    int grado_mayor;
 	
-	if (p1.getGrado() <= p2.getGrado()) {
-		grado_menor = p1.getGrado();
+	if (p1.getGrado() <= p2.getGrado())
 		grado_mayor = p2.getGrado();
-	}
-	else {
-		grado_menor = p2.getGrado();
+	else
 		grado_mayor = p1.getGrado();
-	}
     Polinomio resultado;
-	for (int i = 0; i <= grado_menor; i++)
+	for (int i = 0; i <= grado_mayor; i++)
 		resultado.setCoeficiente(i, (p1.getCoeficiente(i) + p2.getCoeficiente(i)));
-	if (grado_menor == p1.getGrado())
-		for (int i = grado_menor + 1; i <= grado_mayor; i++)
-			resultado.setCoeficiente(i, p2.getCoeficiente(i));
-    else {
-        for (int i = grado_menor + 1; i <= grado_mayor; i++)
-			resultado.setCoeficiente(i, p1.getCoeficiente(i));
-	}
+	
     return resultado;
 }
 

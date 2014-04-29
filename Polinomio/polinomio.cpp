@@ -38,8 +38,8 @@ int main () {
 	p1.setCoeficiente(0, 1);
 	p2.setCoeficiente(1, 4);
 	p2.setCoeficiente(0, 2);
-	p1.print();
-	p2.print();
+    cout << p1;
+	cout << p2;
 	cout << p2.getGrado() << endl;
 	p2.sumar(p1);
 	p2.print();
@@ -53,7 +53,7 @@ int main () {
 	p3.print();
     
     Polinomio resul = p1; // Aquí sí llama al constructor por copia
-    Polinomio res = p1.sumar_v1(p2); // pero aquí no entiendo por qué llama al constructor por defecto
+    Polinomio res = p1 + p2 ; // pero aquí no entiendo por qué llama al constructor por defecto
     cout << "Imprimimos res: ";
     res.print();
     
@@ -73,8 +73,11 @@ int main () {
     delete [] vector_p;
     cout << "Hemos borrado el vector" << endl;
     
-    p6.setCoeficiente(12, 6);
-    p6.print();
+//  p6.setCoeficiente(12, 6);
+//  p6.print();
+    cout << "Introduce el polinomio p6: ";
+    cin >> p6;
+    cout << p6;
     cout << p6.getGrado() << endl;
     Polinomio resul2 = p6.sumar_v1(p1);
     cout << resul2.getGrado() << endl;
