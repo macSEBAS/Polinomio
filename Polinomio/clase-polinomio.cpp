@@ -1,9 +1,15 @@
 #include <iostream>
 #include <stdlib.h>
+#include <assert.h>
 #include "clase-polinomio.h"
 using namespace std;
 
 // El orden al declarar los métodos de la clase: Constructures, destructor, set, get, print, y luego los demás
+
+TipoFloat&::TipoFloat::operator=(float f) {
+    this->valor = f;
+    return *this;
+}
 
 Polinomio::Polinomio() {
     cout << "Constructor" << endl;
@@ -29,6 +35,13 @@ Polinomio::Polinomio(const Polinomio &p) {	// el constructor por copia
 	coef = new float[max_grado + 1];
 	for (int i = 0; i <= max_grado; i++)
 		coef[i] = p.coef[i];
+}
+
+Polinomio::Polinomio(float f) {
+    max_grado = 10;
+	grado = 0;
+	coef = new float[max_grado + 1];
+	coef[0] = f;
 }
 
 Polinomio::~Polinomio() {
@@ -63,6 +76,17 @@ void Polinomio::setCoeficiente(int i, float c) {
 	}
 }
 
+void Polinomio::reservaMemoria(int i) {
+    float* aux = new float[i + 1];
+    //Aquí hacer la comprobación de siempre de si no hay memoria salir...
+    for (int j = 0; j <= grado; j++)
+        aux[j] = coef[j];
+    delete [] coef;
+    coef = aux;
+    for (int j = grado + 1; j <= i; j++)
+        coef[j] = 0.0;
+    max_grado = i;
+}
 
 Polinomio& Polinomio::operator=(const Polinomio &p) {
     cout << "Asignación" << endl;
@@ -77,26 +101,26 @@ Polinomio& Polinomio::operator=(const Polinomio &p) {
     return *this;
 }
 
-Polinomio Polinomio::operator+(const Polinomio &p) {
+Polinomio Polinomio::operator+(const Polinomio p) {
     int grado_mayor;
 	
-	if (this->getGrado() <= p.getGrado())
-		grado_mayor = p.getGrado();
+	if (this->grado <= p.grado)
+		grado_mayor = p.grado;
 	else
-		grado_mayor = this->getGrado();
+		grado_mayor = this->grado;
     Polinomio resultado;
 	for (int i = 0; i <= grado_mayor; i++)
-		resultado.setCoeficiente(i, (this->getCoeficiente(i) + p.getCoeficiente(i)));
+		resultado.setCoeficiente(i, (this->coef[i] + p.coef[i]));
     return resultado;
 }
 
 ostream& operator<<(ostream &flujo, const Polinomio &p) {
-    flujo << p.getCoeficiente(p.getGrado());
-    if (p.getGrado() > 0)
-        flujo << "x^" << p.getGrado();
-    for (int i = p.getGrado() - 1; i >= 0; i--) {
-        if (p.getCoeficiente(i) != 0.0) {
-            flujo << " + " << p.getCoeficiente(i);
+    flujo << p.coef[p.grado];
+    if (p.grado > 0)
+        flujo << "x^" << p.grado;
+    for (int i = p.grado - 1; i >= 0; i--) {
+        if (p.coef[i] != 0.0) {
+            flujo << " + " << p.coef[i];
             if (i > 0)
                 flujo << "x^" << i;
         }
@@ -116,6 +140,14 @@ istream& operator>>(istream &flujo, Polinomio &p) {
     }
     while ( grado >= 0);
     return flujo;
+}
+
+float& Polinomio::operator[](int i) {
+    assert(i>=0);
+    if (i > max_grado) {
+        reservaMemoria(i);
+    }
+    return coef[i];
 }
 
 void Polinomio::print() const {

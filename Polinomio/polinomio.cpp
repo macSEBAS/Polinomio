@@ -83,7 +83,12 @@ int main () {
     cout << resul2.getGrado() << endl;
     resul2.print();
     resul = resul2 + p6;
-    resul.print();
+    Polinomio resul3 = resul2 + p6 + p2 + p1;
+    cout << "Estoy imprimiendo resul3: " << resul3;
+    resul3[0] = 15;
+    cout << resul3;
+    cout << resul3[0];
+    
     
 }
 
